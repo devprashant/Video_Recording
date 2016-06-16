@@ -7,6 +7,8 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by mau on 6/16/2016.
@@ -50,7 +52,8 @@ public class InitMediaRecorder {
         // Step 4.
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT);
 
-        mOutputFile = new File(Environment.getExternalStorageDirectory(),"/video_test4.3gp");
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        mOutputFile = new File(Environment.getExternalStorageDirectory(),"/video_test_" + timeStamp + ".3gp");
         mMediaRecorder.setOutputFile(mOutputFile.getAbsolutePath());
 
         // Step 5.

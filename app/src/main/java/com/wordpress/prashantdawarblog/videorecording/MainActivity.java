@@ -42,6 +42,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(mCamera != null) {
+            releaseCamera();
+            mCameraView.getHolder().removeCallback(mCameraView);
+            mCameraView = null;
+        }
+    }
+
+    private void releaseCamera() {
+        if (mCamera != null) {
+            mCamera.stopPreview();
+            mCamera.release();
+            mCamera = null;
+        }
+    }
+
+    private void releaseMediaRecorder(){
+        mMediaRecoder.stop();
+        mMediaRecoder.reset();
+        mMediaRecoder.release();
+        mMediaRecoder = null;
+    }
+
+    @Override
     public void onClick(View v) {
         if(((ToggleButton)v).isChecked()){
             mInitMediaRecorder = new InitMediaRecorder(mCamera);
@@ -49,10 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             mMediaRecoder.start();
         } else {
-            mMediaRecoder.stop();
-            mMediaRecoder.reset();
-            mMediaRecoder.release();
-            mMediaRecoder = null;
+            releaseMediaRecorder();
         }
     }
 }
